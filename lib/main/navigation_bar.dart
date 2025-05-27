@@ -36,21 +36,12 @@ class _MainMenuState extends State<MainMenu> {
     return Scaffold(
       backgroundColor: Colors.green,
       body: SafeArea(
-        child: Stack(
+        child: Flex(
+          direction: Axis.vertical,
           children: [
-            Positioned(left: 0, right: 0, top: 0, child: _TopNavigationBar()),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: _screens[_selectedIndex],
-            ),
-
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: _bottomNavigationBar(),
-            ),
+            Container(child: _TopNavigationBar()),
+            Expanded(child: _screens[_selectedIndex]),
+            Container(child: _bottomNavigationBar()),
           ],
         ),
       ),
@@ -59,18 +50,20 @@ class _MainMenuState extends State<MainMenu> {
 
   Widget _TopNavigationBar() {
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.only(),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       decoration: BoxDecoration(color: Colors.blueAccent),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image(
-            image: AssetImage('images/applannerlighttheme.png'),
-            width: 36,
-            height: 20,
+          Image.asset(
+            'images/applannerlighttheme.png',
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
-          Container(color: Colors.pink, child: Text("image goes here lmao")),
+          Container(
+            color: Colors.pink,
+            child: Text("something else goes here"),
+          ),
         ],
       ),
     );
@@ -78,19 +71,8 @@ class _MainMenuState extends State<MainMenu> {
 
   Widget _bottomNavigationBar() {
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        color: Colors.amber,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 10.0,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+      decoration: BoxDecoration(color: Colors.amber),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(_screens.length, (index) {
@@ -122,6 +104,7 @@ class _MainMenuState extends State<MainMenu> {
             ),
           ),
           padding: EdgeInsets.symmetric(vertical: 3.0),
+          margin: EdgeInsets.only(left: 5, right: 5),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
