@@ -31,7 +31,7 @@ class _UserManegementState extends State<UserManegementList> {
         duration: Duration(milliseconds: 100),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          color: Color.fromARGB(255, 119, 119, 119),
         ),
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
@@ -39,7 +39,7 @@ class _UserManegementState extends State<UserManegementList> {
           children: [
             Icon(icon, size: 35),
             const SizedBox(width: 10),
-            Text(label, style: TextStyle(fontSize: 24)),
+            Text(label, style: TextStyle(fontSize: 24, color: Colors.white)),
           ],
         ),
       ),
@@ -68,8 +68,9 @@ class _UserManegementState extends State<UserManegementList> {
                         child: const Text(
                           "Proceed To Logout?",
                           style: TextStyle(
-                            fontSize: 28,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -113,7 +114,11 @@ class _UserManegementState extends State<UserManegementList> {
                           ),
                           child: Text(
                             "Logout",
-                            style: TextStyle(color: Colors.black, fontSize: 28),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
@@ -131,7 +136,7 @@ class _UserManegementState extends State<UserManegementList> {
               duration: Duration(milliseconds: 100),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.redAccent.shade100,
+                color: Colors.redAccent.shade400,
               ),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               margin: EdgeInsets.fromLTRB(10, 5, 10, 10),

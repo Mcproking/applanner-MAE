@@ -35,7 +35,7 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Color.fromARGB(255, 18, 18, 18),
       body: SafeArea(
         child: Flex(
           direction: Axis.vertical,
@@ -52,7 +52,7 @@ class _MainMenuState extends State<MainMenu> {
   Widget _TopNavigationBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-      decoration: BoxDecoration(color: Colors.blueAccent),
+      decoration: BoxDecoration(color: Color.fromARGB(255, 51, 51, 51)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -73,7 +73,7 @@ class _MainMenuState extends State<MainMenu> {
   Widget _bottomNavigationBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
-      decoration: BoxDecoration(color: Colors.amber),
+      decoration: BoxDecoration(color: Color.fromARGB(255, 51, 51, 51)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(_screens.length, (index) {
@@ -85,7 +85,8 @@ class _MainMenuState extends State<MainMenu> {
 
   Widget _buildNavItem(int index) {
     final isSelected = _selectedIndex == index;
-    final iconColor = isSelected ? Colors.blueAccent : Colors.purple;
+    final iconColor =
+        isSelected ? Color.fromARGB(255, 153, 153, 153) : Colors.purple;
 
     return Expanded(
       child: GestureDetector(
@@ -96,11 +97,17 @@ class _MainMenuState extends State<MainMenu> {
           duration: Duration(milliseconds: 100),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: isSelected ? Colors.redAccent : Colors.transparent,
+            color:
+                isSelected
+                    ? Color.fromARGB(255, 134, 53, 214)
+                    : Colors.transparent,
             border: Border(
               bottom:
                   isSelected
-                      ? BorderSide(color: Colors.yellow, width: 2.0)
+                      ? BorderSide(
+                        color: Color.fromARGB(255, 134, 53, 214),
+                        width: 2.0,
+                      )
                       : BorderSide.none,
             ),
           ),
@@ -125,6 +132,7 @@ class _MainMenuState extends State<MainMenu> {
                 color: iconColor,
                 size: 30,
               ),
+              Text((index == 0 ? "Home" : "More")),
             ],
           ),
         ),

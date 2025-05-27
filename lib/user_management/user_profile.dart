@@ -69,8 +69,12 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent,
-      appBar: AppBar(title: const Text("Profile")),
+      backgroundColor: Color.fromARGB(255, 18, 18, 18),
+      appBar: AppBar(
+        title: const Text("Profile"),
+        backgroundColor: Color.fromARGB(255, 51, 51, 51),
+        shadowColor: Color.fromARGB(255, 119, 119, 119),
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -105,8 +109,15 @@ class _UserProfileState extends State<UserProfile> {
                       duration: Duration(milliseconds: 200),
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey,
                         borderRadius: BorderRadius.circular(60),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(0, 2),
+                            blurRadius: 5,
+                          ),
+                        ],
                       ),
                       child: Icon(Icons.edit, size: 30),
                     ),
@@ -126,6 +137,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                   child: Text(
@@ -152,6 +164,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                   child: Text(
@@ -178,6 +191,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                   child: Text(
@@ -204,6 +218,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                   child: Text(
@@ -219,84 +234,58 @@ class _UserProfileState extends State<UserProfile> {
               const SizedBox(height: 20),
 
               // Button functions
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: MouseRegion(
-                      onEnter: (_) {},
-                      onExit: (_) {},
-                      onHover: (_) {},
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 200),
-                        decoration: BoxDecoration(
-                          color: Colors.pink,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              offset: Offset(0, 2),
-                              blurRadius: 2,
-                            ),
-                          ],
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 15,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.edit),
-                            const SizedBox(width: 5),
-                            const Text(
-                              "Edit Profile",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+              GestureDetector(
+                onTap: () {},
 
-                  const SizedBox(width: 30),
-
-                  GestureDetector(
-                    onTap: () {},
-                    child: MouseRegion(
-                      onEnter: (_) {},
-                      onExit: (_) {},
-                      onHover: (_) {},
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 200),
-                        decoration: BoxDecoration(
-                          color: Colors.pink,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 15,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete),
-                            const SizedBox(width: 5),
-                            const Text(
-                              "Delete Account",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 134, 53, 214),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0, 2),
+                        blurRadius: 2,
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Row(
+                    children: [
+                      Icon(Icons.edit),
+                      const SizedBox(width: 5),
+                      const Text(
+                        "Edit Profile",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 15),
+
+              GestureDetector(
+                onTap: () {},
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  decoration: BoxDecoration(
+                    color: Colors.pink,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete),
+                      const SizedBox(width: 5),
+                      const Text(
+                        "Delete Account",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

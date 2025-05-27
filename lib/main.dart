@@ -22,13 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'APPlanner',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Color.fromARGB(255, 90, 133, 243),
-        ),
-        useMaterial3: true,
-      ),
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
       home: AuthGate(),
+      color: Color.fromARGB(255, 18, 18, 18),
     );
   }
 }
@@ -96,6 +92,6 @@ class AuthGate extends StatelessWidget {
     }
 
     // If no user get from Auth
-    return MainMenu();
+    return LoginPage();
   }
 }
