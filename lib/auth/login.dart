@@ -1,5 +1,6 @@
 import 'package:applanner/auth/authentication.dart';
 import 'package:applanner/auth/signup.dart';
+import 'package:applanner/main/navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  bool _passwordVisble = false;
+  bool _passwordHidden = true;
   bool _isHovered = false;
 
   @override
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Text field for password
                   TextFormField(
                     controller: _passwordController,
-                    obscureText: _passwordVisble,
+                    obscureText: _passwordHidden,
                     decoration: InputDecoration(
                       labelText: "Password",
                       border: OutlineInputBorder(
@@ -83,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
-                            _passwordVisble = !_passwordVisble;
+                            _passwordHidden = !_passwordHidden;
                           });
                         },
                         icon: Icon(
-                          _passwordVisble
+                          _passwordHidden
                               ? Icons.visibility
                               : Icons.visibility_off,
                         ),
@@ -124,14 +125,16 @@ class _LoginPageState extends State<LoginPage> {
                                     .get();
 
                             if (userDoc.exists) {
-                              print("Debug: User Doc exist");
-                              print(userDoc.data());
-
                               int? role = userDoc.data()?['role'];
 
                               switch (role) {
                                 case 0:
-                                  print("hello");
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MainMenu(),
+                                    ),
+                                  );
                                   // rediect the user
                                   break;
                                 case 1:
@@ -218,6 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 10),
 
+                  // redirect to signup page
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

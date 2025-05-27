@@ -1,4 +1,5 @@
 import 'package:applanner/main/home.dart';
+import 'package:applanner/user_management/user_management_list.dart';
 import 'package:applanner/user_management/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -21,7 +22,7 @@ class _MainMenuState extends State<MainMenu> {
     _selectedIndex = widget.initialIndex; // init the passed index
   }
 
-  static List<Widget> _screens = <Widget>[Home(), UserProfile()];
+  static List<Widget> _screens = <Widget>[Home(), UserManegementList()];
 
   // lets say 4 screen 1 scan QR
 
