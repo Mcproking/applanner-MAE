@@ -43,7 +43,7 @@ class _UserProfileState extends State<UserProfile> {
             _university = userData['university'] ?? 'Temp University';
             _profileImageUrl =
                 userData.data()?.containsKey('profile_pic') == true
-                    ? userData['proile_pic']
+                    ? userData['profile_pic']
                     : null;
             _isLoading = false;
           });
@@ -103,7 +103,9 @@ class _UserProfileState extends State<UserProfile> {
                   // editing pen
                   GestureDetector(
                     onTap: () {
-                      print('Redirect to upload_profile.dart');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: const Text("Not yet implement")),
+                      );
                     },
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 200),
@@ -228,62 +230,6 @@ class _UserProfileState extends State<UserProfile> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Button functions
-              GestureDetector(
-                onTap: () {},
-
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 200),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 134, 53, 214),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        offset: Offset(0, 2),
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Row(
-                    children: [
-                      Icon(Icons.edit),
-                      const SizedBox(width: 5),
-                      const Text(
-                        "Edit Profile",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 15),
-
-              GestureDetector(
-                onTap: () {},
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 200),
-                  decoration: BoxDecoration(
-                    color: Colors.pink,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Row(
-                    children: [
-                      Icon(Icons.delete),
-                      const SizedBox(width: 5),
-                      const Text(
-                        "Delete Account",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ],
                   ),
                 ),
               ),
