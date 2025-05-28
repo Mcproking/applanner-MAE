@@ -1,13 +1,16 @@
+import 'package:applanner/main/event.dart';
 import 'package:applanner/main/home.dart';
 import 'package:applanner/user_management/user_management_list.dart';
 import 'package:applanner/user_management/user_profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class MainMenu extends StatefulWidget {
   final int initialIndex;
 
-  MainMenu({super.key, this.initialIndex = 0});
+  MainMenu({super.key, this.initialIndex = 1});
 
   @override
   State<StatefulWidget> createState() => _MainMenuState();
@@ -22,7 +25,24 @@ class _MainMenuState extends State<MainMenu> {
     _selectedIndex = widget.initialIndex; // init the passed index
   }
 
-  static List<Widget> _screens = <Widget>[Home(), UserManegementList()];
+  // static List<Widget> _screens = <Widget>[Home(), UserManegementList()];
+
+  static final List<Map<String, dynamic>> _screens = [
+    {
+      'icon': Icons.home,
+      'icon_select': Icons.home_outlined,
+      'label': 'Home',
+      'redirect': Home(),
+    },
+    {
+      'icon': Icons.accessible_forward,
+      'icon_select': Icons.accessible,
+      'label': 'Events',
+      'redirect': Event(),
+    },
+  ];
+
+  String? _profileUrl;
 
   // lets say 4 screen 1 scan QR
 
@@ -41,12 +61,42 @@ class _MainMenuState extends State<MainMenu> {
           direction: Axis.vertical,
           children: [
             Container(child: _TopNavigationBar()),
-            Expanded(child: _screens[_selectedIndex]),
+            Expanded(child: _screens[_selectedIndex]['redirect']),
             Container(child: _bottomNavigationBar()),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _fetchProfileImage() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final userData =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.uid)
+                .get();
+
+        if (userData.exists && userData.data() != null) {
+          setState(() {
+            _profileUrl =
+                userData.data()?.containsKey('profile_pic') == true
+                    ? userData['profile_pic']
+                    : null;
+          });
+        } else {
+          setState(() {
+            _profileUrl = null;
+          });
+        }
+      }
+    } catch (e) {
+      setState(() {
+        _profileUrl = null;
+      });
+    }
   }
 
   Widget _TopNavigationBar() {
@@ -61,9 +111,20 @@ class _MainMenuState extends State<MainMenu> {
             width: MediaQuery.of(context).size.width * 0.3,
             height: MediaQuery.of(context).size.height * 0.05,
           ),
-          Container(
-            color: Colors.pink,
-            child: Text("something else goes here"),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserManegementList()),
+              );
+            },
+            child: CircleAvatar(
+              backgroundImage:
+                  _profileUrl != null
+                      ? NetworkImage(_profileUrl!)
+                      : const AssetImage('images/profile/default_profile.png')
+                          as ImageProvider,
+            ),
           ),
         ],
       ),
@@ -77,13 +138,24 @@ class _MainMenuState extends State<MainMenu> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(_screens.length, (index) {
-          return _buildNavItem(index);
+          final item = _screens[index];
+          return _buildNavItem(
+            index,
+            item['icon'],
+            item['icon_select'],
+            item['label'],
+          );
         }),
       ),
     );
   }
 
-  Widget _buildNavItem(int index) {
+  Widget _buildNavItem(
+    int index,
+    IconData icon,
+    IconData iconSelected,
+    String label,
+  ) {
     final isSelected = _selectedIndex == index;
     final iconColor =
         isSelected ? Color.fromARGB(255, 153, 153, 153) : Colors.purple;
@@ -118,21 +190,11 @@ class _MainMenuState extends State<MainMenu> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                isSelected
-                    ? (index == 0
-                        ? Icons.home_outlined
-                        : index == 1
-                        ? Icons.account_box
-                        : Icons.more_horiz_outlined)
-                    : (index == 0
-                        ? Icons.home
-                        : index == 1
-                        ? Icons.account_box_outlined
-                        : Icons.more_horiz),
+                isSelected ? iconSelected : icon,
                 color: iconColor,
                 size: 30,
               ),
-              Text((index == 0 ? "Home" : "More")),
+              Text(label),
             ],
           ),
         ),
