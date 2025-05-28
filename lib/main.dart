@@ -68,7 +68,8 @@ class AuthGate extends StatelessWidget {
             return MainMenu();
             break;
           case 1:
-            // rediect to club orgi page
+            return MainMenu();
+
             break;
           case 2:
             // redirect to admin page

@@ -148,6 +148,12 @@ class _LoginPageState extends State<LoginPage> {
                                     // rediect the user
                                     break;
                                   case 1:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MainMenu(),
+                                      ),
+                                    );
                                     // rediect to club orgi page
                                     break;
                                   case 2:
