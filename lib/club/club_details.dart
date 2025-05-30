@@ -326,8 +326,6 @@ class _ClubDetailsState extends State<ClubDetails> {
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 40),
                   ],
                 ),
               ),
