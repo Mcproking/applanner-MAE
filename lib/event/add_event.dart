@@ -352,14 +352,24 @@ class _AddEventState extends State<AddEvent> {
                         if (_iscomplete) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Event Created. Await approval."),
+                              content: Text(
+                                "Event Created. Awaiting for approval.",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               backgroundColor: Colors.green,
                             ),
                           );
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MainMenu()),
+                          Navigator.pop(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Internal Error Occor",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              backgroundColor: Colors.red,
+                            ),
                           );
                         }
                       }
