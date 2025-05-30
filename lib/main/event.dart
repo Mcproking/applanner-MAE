@@ -23,16 +23,6 @@ class _EventState extends State<Event> {
   // show only approved events
   static final List<Map<String, dynamic>> _tempData = [
     {
-      'id': 'abc',
-      'eventName': 'Event 1',
-      'clubName': 'Club 1',
-      'date': '11/12/23',
-      'time': '0902',
-      'venue': 'Audi 1',
-      'description': 'Short Description',
-      'eventImageURL': null,
-    },
-    {
       'id': '123',
       'eventName': 'Event 2',
       'clubName': 'Club 2',
@@ -43,18 +33,6 @@ class _EventState extends State<Event> {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer consectetur dolor venenatis diam lobortis, nec malesuada dolor finibus. Duis vel viverra odio. Suspendisse elementum facilisis ex, ac pretium nisl volutpat vel. Mauris fermentum, elit at luctus varius, ipsum arcu vestibulum nulla, ac fermentum velit neque eu nisl. Mauris euismod est sit amet sagittis sodales. Donec ut orci sit amet nisi commodo bibendum id eget elit. Nulla fermentum felis eros, eu feugiat velit posuere vitae. In sed fermentum felis, nec lobortis lorem. Etiam nisl ex, finibus in ipsum ut, mollis congue diam. Vestibulum volutpat ac nunc et porttitor. Praesent nec hendrerit mauris. ",
       'eventImageURL':
           "https://cdn.donmai.us/sample/bc/f4/__original_drawn_by_mito_go_go_king__sample-bcf4eb5593414c80c794d9e53a491214.jpg",
-    },
-    {
-      'id': 'fgdas',
-      'eventName': 'Event 3',
-      'clubName': 'Club 3',
-      'date': '21/4/23',
-      'time': '2202',
-      'venue': 'Audi 2',
-      'description':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sem nec sapien condimentum, vel consequat justo porttitor. In venenatis id purus id convallis",
-      'eventImageURL':
-          "https://cdn.donmai.us/sample/e5/55/__original_drawn_by_mito_go_go_king__sample-e5554e648649067c5f8776ab30ceb235.jpg",
     },
   ];
   List<Map<String, dynamic>> _eventList = [];
@@ -142,7 +120,6 @@ class _EventState extends State<Event> {
         data['event_image_URL'] =
             data.containsKey('imageURL') == true ? data['imageURL'] : null;
 
-        print(data);
         if (data['club'] != null && data['club'] is DocumentReference) {
           final clubSnapshot = await (data['club'] as DocumentReference).get();
           final clubData = clubSnapshot.data() as Map<String, dynamic>;
@@ -255,33 +232,36 @@ class _EventState extends State<Event> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Book Button
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 35, 175, 11),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        child: Row(
-                          children: [
-                            const Text(
-                              "Book",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    _userRole != 0
+                        ? const SizedBox.shrink()
+                        :
+                        // Book Button
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 35, 175, 11),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            const SizedBox(width: 4),
-                            Icon(Icons.book),
-                          ],
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  "Book",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Icon(Icons.book),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
 
                     // More Info Button
                     GestureDetector(
@@ -398,16 +378,20 @@ class _EventState extends State<Event> {
                               ...List.generate(_eventList.length, (index) {
                                 final item = _eventList[index];
                                 if (item.containsKey('isApproved') == true) {
-                                  return _buildEventCard(
-                                    item['id'],
-                                    item['name'],
-                                    item['clubName'],
-                                    item['date'],
-                                    item['start_time'],
-                                    item['venue'],
-                                    item['description'],
-                                    item['event_image_URL'],
-                                  );
+                                  if (item['isApproved'] == true) {
+                                    return _buildEventCard(
+                                      item['id'],
+                                      item['name'],
+                                      item['clubName'],
+                                      item['date'],
+                                      item['start_time'],
+                                      item['venue'],
+                                      item['description'],
+                                      item['event_image_URL'],
+                                    );
+                                  } else {
+                                    return SizedBox.shrink();
+                                  }
                                 } else {
                                   return SizedBox.shrink();
                                 }
