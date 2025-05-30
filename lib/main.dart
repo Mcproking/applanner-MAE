@@ -1,3 +1,4 @@
+import 'package:applanner/admin/admin_dashboard.dart';
 import 'package:applanner/auth/login.dart';
 import 'package:applanner/auth/signup.dart';
 import 'package:applanner/main/navigation_bar.dart';
@@ -69,7 +70,7 @@ class AuthGate extends StatelessWidget {
           case 1:
             return MainMenu();
           case 2:
-            // redirect to admin page
+            return MainMenu();
             break;
           case null:
             print("Debug: Role data doesn't exist");

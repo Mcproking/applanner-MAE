@@ -1,3 +1,4 @@
+import 'package:applanner/admin/admin_dashboard.dart';
 import 'package:applanner/main/club.dart';
 import 'package:applanner/main/event.dart';
 import 'package:applanner/main/home.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/rendering.dart';
 class MainMenu extends StatefulWidget {
   final int initialIndex;
 
-  MainMenu({super.key, this.initialIndex = 2});
+  MainMenu({super.key, this.initialIndex = 0});
 
   @override
   State<StatefulWidget> createState() => _MainMenuState();
@@ -19,17 +20,19 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   late int _selectedIndex;
+  String _name = 'Temp';
+  int _role = 0;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
-    _fetchProfileImage(); // init the passed index
+    _fetchUserData(); // init the passed index
   }
 
   // static List<Widget> _screens = <Widget>[Home(), UserManegementList()];
 
-  static final List<Map<String, dynamic>> _screens = [
+  final List<Map<String, dynamic>> _screens = [
     {
       'icon': Icons.home,
       'icon_select': Icons.home_outlined,
@@ -40,6 +43,27 @@ class _MainMenuState extends State<MainMenu> {
       'icon': Icons.accessible_forward,
       'icon_select': Icons.accessible,
       'label': 'Events',
+      'redirect': Event(),
+    },
+    {
+      'icon': Icons.group,
+      'icon_select': Icons.group_outlined,
+      'label': 'Clubs',
+      'redirect': Club(),
+    },
+  ];
+
+  final List<Map<String, dynamic>> _adminScreen = [
+    {
+      'icon': Icons.home,
+      'icon_select': Icons.home_outlined,
+      'label': 'Home',
+      'redirect': AdminMenu(),
+    },
+    {
+      'icon': Icons.event,
+      'icon_select': Icons.event_outlined,
+      'label': 'Event',
       'redirect': Event(),
     },
     {
@@ -68,8 +92,13 @@ class _MainMenuState extends State<MainMenu> {
         child: Flex(
           direction: Axis.vertical,
           children: [
-            Container(child: _TopNavigationBar()),
-            Expanded(child: _screens[_selectedIndex]['redirect']),
+            Container(child: _topNavigationBar()),
+            Expanded(
+              child:
+                  _role == 2
+                      ? _adminScreen[_selectedIndex]['redirect']
+                      : _screens[_selectedIndex]['redirect'],
+            ),
             Container(child: _bottomNavigationBar()),
           ],
         ),
@@ -77,7 +106,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Future<void> _fetchProfileImage() async {
+  Future<void> _fetchUserData() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -89,6 +118,8 @@ class _MainMenuState extends State<MainMenu> {
 
         if (userData.exists && userData.data() != null) {
           setState(() {
+            _name = userData.data()?['name'] ?? 'Temp';
+            _role = userData.data()?['role'] ?? '0';
             _profileUrl =
                 userData.data()?.containsKey('profile_pic') == true
                     ? userData['profile_pic']
@@ -96,18 +127,22 @@ class _MainMenuState extends State<MainMenu> {
           });
         } else {
           setState(() {
+            _name = 'Temp';
+            _role = 0;
             _profileUrl = null;
           });
         }
       }
     } catch (e) {
       setState(() {
+        _name = 'Temp';
+        _role = 0;
         _profileUrl = null;
       });
     }
   }
 
-  Widget _TopNavigationBar() {
+  Widget _topNavigationBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       decoration: BoxDecoration(color: Color.fromARGB(255, 51, 51, 51)),
@@ -145,15 +180,26 @@ class _MainMenuState extends State<MainMenu> {
       decoration: BoxDecoration(color: Color.fromARGB(255, 51, 51, 51)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(_screens.length, (index) {
-          final item = _screens[index];
-          return _buildNavItem(
-            index,
-            item['icon'],
-            item['icon_select'],
-            item['label'],
-          );
-        }),
+        children:
+            _role == 2
+                ? List.generate(_adminScreen.length, (index) {
+                  final item = _adminScreen[index];
+                  return _buildNavItem(
+                    index,
+                    item['icon'],
+                    item['icon_select'],
+                    item['label'],
+                  );
+                })
+                : List.generate(_screens.length, (index) {
+                  final item = _screens[index];
+                  return _buildNavItem(
+                    index,
+                    item['icon'],
+                    item['icon_select'],
+                    item['label'],
+                  );
+                }),
       ),
     );
   }

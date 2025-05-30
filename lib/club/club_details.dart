@@ -166,7 +166,9 @@ class _ClubDetailsState extends State<ClubDetails> {
                               horizontal: 10,
                             ),
                             width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(color: Colors.grey),
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 85, 85, 85),
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -186,7 +188,9 @@ class _ClubDetailsState extends State<ClubDetails> {
                               vertical: 15,
                               horizontal: 20,
                             ),
-                            decoration: BoxDecoration(color: Color.fromARGB(256, 255, 66, 190)),
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 133, 34, 98),
+                            ),
                             child: Row(
                               children: [
                                 CircleAvatar(
@@ -205,7 +209,7 @@ class _ClubDetailsState extends State<ClubDetails> {
                                 Text(
                                   _studentName,
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontSize: 20,
                                   ),
                                 ),

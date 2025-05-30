@@ -367,27 +367,8 @@ class _EventState extends State<Event> {
     );
   }
 
-  Widget _buildAddEvent(DocumentReference? clubRef) {
-    return Positioned(
-      bottom: 20,
-      right: 20,
-      child: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 134, 53, 214),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddEvent(clubRef: clubRef!),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-
   // TODO: Need to fix the bug that the [+] is not located to the bottom
+  // TODO: Add guest access, only ask to login when they want to book the events
   @override
   Widget build(BuildContext context) {
     return Scaffold(

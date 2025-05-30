@@ -1,3 +1,4 @@
+import 'package:applanner/admin/admin_dashboard.dart';
 import 'package:applanner/auth/authentication.dart';
 import 'package:applanner/auth/signup.dart';
 import 'package:applanner/main/navigation_bar.dart';
@@ -157,6 +158,12 @@ class _LoginPageState extends State<LoginPage> {
                                     // rediect to club orgi page
                                     break;
                                   case 2:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AdminMenu(),
+                                      ),
+                                    );
                                     // redirect to admin page
                                     break;
                                   case null:
