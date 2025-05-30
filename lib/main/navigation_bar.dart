@@ -1,3 +1,4 @@
+import 'package:applanner/main/club.dart';
 import 'package:applanner/main/event.dart';
 import 'package:applanner/main/home.dart';
 import 'package:applanner/user_management/user_management_list.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/rendering.dart';
 class MainMenu extends StatefulWidget {
   final int initialIndex;
 
-  MainMenu({super.key, this.initialIndex = 1});
+  MainMenu({super.key, this.initialIndex = 2});
 
   @override
   State<StatefulWidget> createState() => _MainMenuState();
@@ -22,7 +23,8 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex; // init the passed index
+    _selectedIndex = widget.initialIndex;
+    _fetchProfileImage(); // init the passed index
   }
 
   // static List<Widget> _screens = <Widget>[Home(), UserManegementList()];
@@ -39,6 +41,12 @@ class _MainMenuState extends State<MainMenu> {
       'icon_select': Icons.accessible,
       'label': 'Events',
       'redirect': Event(),
+    },
+    {
+      'icon': Icons.group,
+      'icon_select': Icons.group_outlined,
+      'label': 'Clubs',
+      'redirect': Club(),
     },
   ];
 
