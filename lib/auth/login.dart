@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => AdminMenu(),
+                                        builder: (context) => MainMenu(),
                                       ),
                                     );
                                     // redirect to admin page
