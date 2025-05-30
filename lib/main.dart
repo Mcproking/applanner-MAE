@@ -66,11 +66,8 @@ class AuthGate extends StatelessWidget {
         switch (role) {
           case 0:
             return MainMenu();
-            break;
           case 1:
             return MainMenu();
-
-            break;
           case 2:
             // redirect to admin page
             break;
