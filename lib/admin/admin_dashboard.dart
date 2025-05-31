@@ -1,3 +1,4 @@
+import 'package:applanner/admin/admin_ManageEvent.dart';
 import 'package:applanner/admin/admin_eventDetails.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -103,16 +104,19 @@ class _AdminMenuState extends State<AdminMenu> {
           });
         }
 
-        print(data);
         if (!data.containsKey('isApproved')) {
           events.add(data);
         }
-
+      }
+      if (events.isEmpty) {
         setState(() {
           _eventList = events;
-          if (_eventList.isEmpty) {
-            _isEmpty = true;
-          }
+          _isEmpty = true;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _eventList = events;
           _isLoading = false;
         });
       }
@@ -325,7 +329,15 @@ class _AdminMenuState extends State<AdminMenu> {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => AdminManageEvent(),
+                                      ),
+                                    );
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 10,
