@@ -2,6 +2,7 @@ import 'package:applanner/admin/admin_dashboard.dart';
 import 'package:applanner/main/club.dart';
 import 'package:applanner/main/event.dart';
 import 'package:applanner/main/home.dart';
+import 'package:applanner/main/more.dart';
 import 'package:applanner/user_management/user_management_list.dart';
 import 'package:applanner/user_management/user_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +51,12 @@ class _MainMenuState extends State<MainMenu> {
       'icon_select': Icons.group_outlined,
       'label': 'Clubs',
       'redirect': Club(),
+    },
+    {
+      'icon': Icons.menu,
+      'icon_select': Icons.menu_outlined,
+      'label': 'More',
+      'redirect': MoreMenu(),
     },
   ];
 
