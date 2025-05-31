@@ -154,12 +154,12 @@ class _ClubState extends State<Club> {
                           club['clubIcon'],
                         );
                       }),
-                      _buildClubCard(
-                        'TPapKIw07KxoKTIyMJAL',
-                        "what if this club name is too long that it can cause overflow",
-                        "descrition goes here nigga",
-                        "https://cdn.donmai.us/sample/ae/02/__original_drawn_by_mito_go_go_king__sample-ae024f0c0fa1f620c4ddd9de644b078e.jpg",
-                      ),
+                      // _buildClubCard(
+                      //   'TPapKIw07KxoKTIyMJAL',
+                      //   "what if this club name is too long that it can cause overflow",
+                      //   "descrition goes here nigga",
+                      //   "https://cdn.donmai.us/sample/ae/02/__original_drawn_by_mito_go_go_king__sample-ae024f0c0fa1f620c4ddd9de644b078e.jpg",
+                      // ),
                     ],
                   ),
                 ),
