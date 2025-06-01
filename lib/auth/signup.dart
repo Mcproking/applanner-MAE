@@ -181,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextFormField(
                       controller: _universityNameController,
                       decoration: InputDecoration(
-                        labelText: 'Unversity Name',
+                        labelText: 'University Name',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
