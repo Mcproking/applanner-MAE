@@ -2,9 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:applanner/main.dart' as app;
 import 'package:flutter/material.dart';
-import 'package:applanner/member/member_dashboard.dart';
-import 'package:applanner/club_organizer/co_dashboard.dart';
-import 'package:applanner/admin/admin_dashboard.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
