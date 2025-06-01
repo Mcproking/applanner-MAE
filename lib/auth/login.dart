@@ -98,8 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           icon: Icon(
                             _passwordHidden
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             color: Colors.white,
                           ),
                         ),
