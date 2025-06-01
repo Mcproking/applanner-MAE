@@ -380,7 +380,8 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
                                 ? "Not Yet Approve"
                                 : _eventStatus == true && _eventComplete == null
                                 ? "Approved"
-                                : _eventStatus == true && _eventComplete == null
+                                : _eventStatus == false &&
+                                    _eventComplete == null
                                 ? "Rejected"
                                 : "Event Finish",
                             style: TextStyle(
@@ -519,7 +520,7 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
                               ),
                             ],
                           )
-                          : _eventComplete == null
+                          : _eventComplete == null && _eventStatus == true
                           ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

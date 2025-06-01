@@ -1,6 +1,7 @@
 import 'package:applanner/member/member_backend.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MoreEvent extends StatefulWidget {
@@ -27,6 +28,8 @@ class _MoreEventState extends State<MoreEvent> {
   int _eventRSVP = 0;
   List<Map<String, dynamic>> _attendList = [];
 
+  int _userRole = 0;
+
   bool _isLoading = true;
   bool _isCompleted = false;
 
@@ -43,6 +46,17 @@ class _MoreEventState extends State<MoreEvent> {
     try {
       final eventData =
           await FirebaseFirestore.instance.collection('events').doc(_uid).get();
+      final userData =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .get();
+
+      if (userData.exists && eventData.data() != null) {
+        setState(() {
+          _userRole = userData['role'];
+        });
+      }
 
       if (eventData.exists && eventData.data() != null) {
         if (eventData['club'] != null &&
@@ -76,8 +90,6 @@ class _MoreEventState extends State<MoreEvent> {
           for (DocumentReference ref in attendRefs) {
             final snapshot = await ref.get();
             if (snapshot.exists && snapshot.data() != null) {
-
-
               attendUsers.add(snapshot.data() as Map<String, dynamic>);
             }
           }
@@ -349,6 +361,8 @@ class _MoreEventState extends State<MoreEvent> {
                                   ),
                                 ),
                               )
+                              : _userRole != 0
+                              ? const SizedBox.shrink()
                               : GestureDetector(
                                 onTap: () {
                                   ScaffoldMessenger.of(context).showSnackBar(

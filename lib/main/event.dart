@@ -233,6 +233,7 @@ class _EventState extends State<Event> {
                             ),
                             child: Row(
                               children: [
+                                _userRole != 0 ? const SizedBox.shrink():
                                 const Text(
                                   "Book",
                                   style: TextStyle(
