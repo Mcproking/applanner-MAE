@@ -1,4 +1,5 @@
 import 'package:applanner/club_organizer/co_backend.dart';
+import 'package:applanner/club_organizer/co_backend.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
   bool _isApproved = false;
   bool _isLoading = true;
 
-  final ClubOrgService _ClubOrgService = ClubOrgService();
+  final OrganizerService _clubOrgService = OrganizerService();
 
   @override
   void initState() {
@@ -420,9 +421,8 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
                                                 ).hideCurrentSnackBar();
 
                                                 isCompleted =
-                                                    await _ClubOrgService.deleteEvent(
-                                                      _uid,
-                                                    );
+                                                    await _clubOrgService
+                                                        .deleteEvent(_uid);
 
                                                 if (isCompleted) {
                                                   Navigator.pop(context, true);
