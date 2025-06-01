@@ -378,9 +378,11 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
                           child: Text(
                             _eventStatus == null
                                 ? "Not Yet Approve"
-                                : _eventStatus == true
+                                : _eventStatus == true && _eventComplete == null
                                 ? "Approved"
-                                : "Rejected",
+                                : _eventStatus == true && _eventComplete == null
+                                ? "Rejected"
+                                : "Event Finish",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

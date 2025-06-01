@@ -94,7 +94,8 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(backgroundColor: Colors.red.shade200, content: Text('$e')),
-      );}
+      );
+    }
   }
 
   Widget _buildEventCard(Map<String, dynamic> data, int index) {
@@ -123,7 +124,9 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
                   decoration: BoxDecoration(
                     color:
                         data.containsKey('isApproved')
-                            ? data['isApproved']
+                            ? data.containsKey('isCompleted')
+                                ? Colors.white
+                                : data['isApproved']
                                 ? Colors.green
                                 : Colors.red
                             : Colors.yellow,
@@ -213,6 +216,75 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
                           : IntrinsicHeight(
                             child: Column(
                               children: [
+                                SizedBox(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      // aproed Legend
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text("Aproved"),
+                                        ],
+                                      ),
+                                      // reject Legend
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text("Rejected"),
+                                        ],
+                                      ),
+                                      // Not yet stat Legend
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text("Not yet Approve"),
+                                        ],
+                                      ),
+                                      // finsh Legend
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text("Finish"),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
                                 ...List.generate(_eventList.length, (index) {
                                   return _buildEventCard(
                                     _eventList[index],
