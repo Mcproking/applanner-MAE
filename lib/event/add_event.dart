@@ -175,6 +175,12 @@ class _AddEventState extends State<AddEvent> {
                     _catagoryCodeController.text = selectedItem.toString();
                     // print(selectedItem);
                   },
+                  validator: (value) {
+                    if (value == null || value.toString().isEmpty) {
+                      return 'Please select a category';
+                    }
+                    return null;
+                  },
                 ),
                 // Divider
                 Row(
@@ -303,6 +309,12 @@ class _AddEventState extends State<AddEvent> {
                   }),
                   onChanged: (selectedItem) {
                     _locationCodeController.text = (selectedItem)!;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a location';
+                    }
+                    return null;
                   },
                 ),
                 const SizedBox(height: 20),
