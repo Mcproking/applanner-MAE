@@ -63,6 +63,7 @@ class _MembernMenuState extends State<MemberMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: ValueKey('member_dashboard'),
       backgroundColor: Color.fromARGB(255, 18, 18, 18),
       resizeToAvoidBottomInset: true,
       body: SafeArea(

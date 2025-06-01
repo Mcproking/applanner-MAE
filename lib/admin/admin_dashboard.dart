@@ -203,6 +203,7 @@ class _AdminMenuState extends State<AdminMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: ValueKey('admin_dashboard'),
       backgroundColor: Color.fromARGB(255, 18, 18, 18),
       resizeToAvoidBottomInset: true,
       body: SafeArea(

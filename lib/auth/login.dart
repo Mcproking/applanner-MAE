@@ -62,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     // Text field for Student email
                     TextFormField(
+                      key: ValueKey('emailField'),
                       controller: _studentEmailController,
                       decoration: InputDecoration(
                         labelText: "Student Email",
@@ -80,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     // Text field for password
                     TextFormField(
+                      key: ValueKey('passwordField'),
                       controller: _passwordController,
                       obscureText: _passwordHidden,
                       decoration: InputDecoration(
@@ -117,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     // login Button
                     GestureDetector(
+                      key: ValueKey('loginButton'),
                       onTap: () async {
                         if (_formKey.currentState!.validate()) {
                           try {
