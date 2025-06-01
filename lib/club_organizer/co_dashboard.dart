@@ -63,6 +63,7 @@ class _ClubOrgMenuState extends State<ClubOrgMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: ValueKey('cluborg_dashboard'),
       backgroundColor: Color.fromARGB(255, 18, 18, 18),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
