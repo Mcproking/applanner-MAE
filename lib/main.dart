@@ -71,7 +71,6 @@ class AuthGate extends StatelessWidget {
             return MainMenu();
           case 2:
             return MainMenu();
-            break;
           case null:
             print("Debug: Role data doesn't exist");
             // if the user data do not have role-related numbering

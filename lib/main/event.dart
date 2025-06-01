@@ -1,4 +1,5 @@
 import 'package:applanner/event/add_event.dart';
+import 'package:applanner/event/event_info.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -265,7 +266,14 @@ class _EventState extends State<Event> {
 
                     // More Info Button
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MoreEvent(uid: uid),
+                          ),
+                        ).then((result) {});
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: Color.fromARGB(255, 93, 36, 149),

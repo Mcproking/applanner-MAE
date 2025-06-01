@@ -1,5 +1,5 @@
 import 'package:applanner/auth/authentication.dart';
-import 'package:applanner/event/co_backend.dart';
+import 'package:applanner/club_organizer/co_backend.dart';
 import 'package:applanner/main/event.dart';
 import 'package:applanner/main/navigation_bar.dart';
 import 'package:applanner/others/dropdownConst.dart';

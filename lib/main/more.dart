@@ -1,4 +1,5 @@
 import 'package:applanner/club_organizer/co_ManageEvent.dart';
+import 'package:applanner/member/member_rsvpList.dart';
 import 'package:flutter/material.dart';
 
 class MoreMenu extends StatefulWidget {
@@ -14,6 +15,11 @@ class _MoreMenuState extends State<MoreMenu> {
       'icon': Icons.event_note,
       'label': 'Created Events',
       'redirect': ClubOrgManageEvent(),
+    },
+    {
+      'icon': Icons.event_available,
+      'label': "RSVP'ed Events",
+      'redirect': RSVPList(),
     },
   ];
 
