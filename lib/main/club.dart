@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Club extends StatefulWidget {
-  Club({super.key});
+  const Club({super.key});
 
   @override
   State<StatefulWidget> createState() => _ClubState();
@@ -38,7 +38,10 @@ class _ClubState extends State<Club> {
         _isLoading = false;
       });
     } catch (e) {
-      print("Error fetching clubs: $e");
+      // print("Error fetching clubs: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red.shade200, content: Text('$e')),
+      );
     }
   }
 
@@ -64,7 +67,7 @@ class _ClubState extends State<Club> {
                 image:
                     clubIconUrl != null
                         ? NetworkImage(clubIconUrl)
-                        : AssetImage(''),
+                        : AssetImage('images/event_default.png'),
                 fit: BoxFit.cover,
                 width: 64,
                 height: 64,
@@ -154,12 +157,6 @@ class _ClubState extends State<Club> {
                           club['clubIcon'],
                         );
                       }),
-                      // _buildClubCard(
-                      //   'TPapKIw07KxoKTIyMJAL',
-                      //   "what if this club name is too long that it can cause overflow",
-                      //   "descrition goes here nigga",
-                      //   "https://cdn.donmai.us/sample/ae/02/__original_drawn_by_mito_go_go_king__sample-ae024f0c0fa1f620c4ddd9de644b078e.jpg",
-                      // ),
                     ],
                   ),
                 ),

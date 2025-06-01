@@ -4,7 +4,7 @@ class AdminService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<bool> manageEvenet(String uid, bool statement) async {
-    bool _isComplete = false;
+    bool isComplete = false;
     final club =
         await FirebaseFirestore.instance.collection('events').doc(uid).get();
 
@@ -14,17 +14,18 @@ class AdminService {
             .collection('events')
             .doc(uid)
             .update({'isApproved': statement})
-            .then((_) => _isComplete = true)
+            .then((_) => isComplete = true)
             .catchError((err) {
-              print(err);
-              _isComplete = false;
+              // print(err);
+              isComplete = false;
+              return isComplete;
             });
-        return _isComplete;
+        return isComplete;
       } catch (e) {
         rethrow;
       }
     } else {
-      return _isComplete;
+      return isComplete;
     }
   }
 }

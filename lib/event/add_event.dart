@@ -1,7 +1,4 @@
-import 'package:applanner/auth/authentication.dart';
 import 'package:applanner/club_organizer/co_backend.dart';
-import 'package:applanner/main/event.dart';
-import 'package:applanner/main/navigation_bar.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +7,7 @@ import 'package:flutter/material.dart';
 class AddEvent extends StatefulWidget {
   final DocumentReference clubRef;
 
-  AddEvent({super.key, required, required this.clubRef});
+  const AddEvent({super.key, required, required this.clubRef});
 
   @override
   State<StatefulWidget> createState() => _AddEventState();
@@ -113,7 +110,7 @@ class _AddEventState extends State<AddEvent> {
                     ),
                     suffixIcon: IconButton(
                       onPressed: () {
-                        print("Show snack bar");
+                        // print("Show snack bar");
                       },
                       icon: Icon(Icons.priority_high),
                     ),
@@ -123,6 +120,7 @@ class _AddEventState extends State<AddEvent> {
                     if (v == null || v.isEmpty) {
                       return 'Please enter Event Name';
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -145,6 +143,7 @@ class _AddEventState extends State<AddEvent> {
                     if (v == null || v.isEmpty) {
                       return 'Please Fill the Event Details';
                     }
+                    return null;
                   },
                   minLines: 1,
                   maxLines: 3,
@@ -174,7 +173,7 @@ class _AddEventState extends State<AddEvent> {
                   }),
                   onChanged: (selectedItem) {
                     _catagoryCodeController.text = selectedItem.toString();
-                    print(selectedItem);
+                    // print(selectedItem);
                   },
                 ),
                 // Divider
@@ -338,7 +337,7 @@ class _AddEventState extends State<AddEvent> {
                       User? user = FirebaseAuth.instance.currentUser;
 
                       if (user != null) {
-                        bool _iscomplete = await _clubOrgService.createEvent(
+                        bool iscomplete = await _clubOrgService.createEvent(
                           _eventNameController.text.trim(),
                           _eventDetailsController.text.trim(),
                           _catagoryCodeController.text.trim(),
@@ -349,7 +348,7 @@ class _AddEventState extends State<AddEvent> {
                           _clubRef,
                         );
 
-                        if (_iscomplete) {
+                        if (iscomplete) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

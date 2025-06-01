@@ -42,7 +42,7 @@ class _MemberScanQRState extends State<MemberScanQR> {
           context,
           MaterialPageRoute(builder: (context) => MemberScannedDetails(uid: _barcode?.displayValue ?? '',)),
         ).then((value) {
-          print(value);
+          // print(value);
 
           if (value == true) {
             setState(() {

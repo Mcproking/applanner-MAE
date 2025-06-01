@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AdminManageEvent extends StatefulWidget {
-  AdminManageEvent({super.key});
+  const AdminManageEvent({super.key});
 
   @override
   State<StatefulWidget> createState() => _AdminManageEventState();
@@ -43,7 +43,6 @@ class _AdminManageEventState extends State<AdminManageEvent> {
         for (var item in dropdownConst.dropdownCatagory) {
           final code = item['Code'];
           final catagory = item['Catagory'];
-          final icon = item['Icons'];
           if (data['catagory_key'] == code) {
             data['catagory'] = catagory;
           }
@@ -71,7 +70,7 @@ class _AdminManageEventState extends State<AdminManageEvent> {
           });
         }
         events.add(data);
-        print("data from $data");
+        // print("data from $data");
       }
 
       setState(() {
@@ -79,14 +78,17 @@ class _AdminManageEventState extends State<AdminManageEvent> {
         _isLoading = false;
       });
     } catch (e) {
-      print("Error fetching clubs: $e");
+      // print("Error fetching clubs: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red.shade200, content: Text('$e')),
+      );
     }
   }
 
   Widget _buildEventCard(Map<String, dynamic> data, int index) {
-    final _textStyle = TextStyle(
+    final textStyle = TextStyle(
       fontWeight: FontWeight.bold,
-      color: Colors.black,
+      color: index % 2 == 0 ? Colors.black : Colors.white,
     );
 
     return Container(
@@ -127,16 +129,16 @@ class _AdminManageEventState extends State<AdminManageEvent> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: index % 2 == 0 ? Colors.black : Colors.white,
                         ),
                       ),
-                      Text(data['catagory']),
-                      Text(data['venue']),
-                      Text(data['date']),
+                      Text(data['catagory'], style: textStyle),
+                      Text(data['venue'], style: textStyle),
+                      Text(data['date'], style: textStyle),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(data['start_time']),
+                          Text(data['start_time'], style: textStyle),
                           GestureDetector(
                             onTap: () async {
                               Navigator.push(
@@ -153,7 +155,7 @@ class _AdminManageEventState extends State<AdminManageEvent> {
                               style: TextStyle(
                                 color:
                                     index % 2 == 0
-                                        ? Color.fromARGB(255, 134, 53, 214)
+                                        ? Color.fromARGB(255, 98, 39, 158)
                                         : Colors.white,
                               ),
                             ),
@@ -180,18 +182,21 @@ class _AdminManageEventState extends State<AdminManageEvent> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(title: Text('Manage Event')),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(10),
-          child: IntrinsicHeight(
-            child: Column(
-              children: [
-                ...List.generate(_eventList.length, (index) {
-                  return _buildEventCard(_eventList[index], index);
-                }),
-              ],
-            ),
-          ),
-        ),
+        child:
+            _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                  padding: EdgeInsets.all(10),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: [
+                        ...List.generate(_eventList.length, (index) {
+                          return _buildEventCard(_eventList[index], index);
+                        }),
+                      ],
+                    ),
+                  ),
+                ),
       ),
     );
   }

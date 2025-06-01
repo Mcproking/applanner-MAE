@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserManegementList extends StatefulWidget {
-  UserManegementList({super.key});
+  const UserManegementList({super.key});
 
   @override
   State<StatefulWidget> createState() => _UserManegementState();

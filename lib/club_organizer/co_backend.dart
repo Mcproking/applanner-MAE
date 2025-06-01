@@ -16,7 +16,7 @@ class OrganizerService {
     DocumentReference clubRef,
   ) async {
     User? user = _auth.currentUser;
-    bool _isComplete = false;
+    bool isComplete = false;
 
     if (user != null) {
       String uid = user.uid;
@@ -37,30 +37,31 @@ class OrganizerService {
                 'location_key': locationKey,
                 'club': clubRef,
               })
-              .then((_) => _isComplete = true)
+              .then((_) => isComplete = true)
               .catchError((err) {
-                print(err);
-                _isComplete = false;
+                // print(err);
+                isComplete = false;
+                return isComplete;
               });
-          return _isComplete;
+          return isComplete;
         } catch (e) {
           rethrow;
         }
       } else {
-        return _isComplete;
+        return isComplete;
       }
     } else {
-      return _isComplete;
+      return isComplete;
     }
   }
 
   Future<bool> deleteEvent(String uid) async {
-    bool _isComplete = false;
-    print(uid);
+    bool isComplete = false;
+    // print(uid);
     try {
       await _firestore.collection('events').doc(uid).delete();
-      _isComplete = true;
-      return _isComplete;
+      isComplete = true;
+      return isComplete;
     } catch (e) {
       rethrow;
     }

@@ -24,7 +24,7 @@ class _RSVPListState extends State<RSVPList> {
   Future<void> _getAllEvent() async {
     try {
       String userUid = FirebaseAuth.instance.currentUser!.uid;
-      final userRef = await FirebaseFirestore.instance
+      final userRef = FirebaseFirestore.instance
           .collection('users')
           .doc(userUid);
       final userSnapshot = await userRef.get();
@@ -66,7 +66,6 @@ class _RSVPListState extends State<RSVPList> {
             for (var item in dropdownConst.dropdownCatagory) {
               final code = item['Code'];
               final catagory = item['Catagory'];
-              final icon = item['Icons'];
               if (event['catagory_key'] == code) {
                 event['catagory'] = catagory;
               }
@@ -93,12 +92,12 @@ class _RSVPListState extends State<RSVPList> {
         });
       }
     } catch (e) {
-      print("Debug: $e");
+      // print("Debug: $e");
     }
   }
 
   Widget _buildEventCard(Map<String, dynamic> data, int index) {
-    final _textStyle = TextStyle(
+    final textStyle = TextStyle(
       fontWeight: FontWeight.bold,
       color: index % 2 == 0 ? Colors.black : Colors.white,
     );
@@ -146,16 +145,16 @@ class _RSVPListState extends State<RSVPList> {
                       ),
                       Text(
                         data['catagory'] ?? 'Unknown Catagory',
-                        style: _textStyle,
+                        style: textStyle,
                       ),
-                      Text(data['venue'] ?? 'Unknown Venue', style: _textStyle),
-                      Text(data['date'] ?? 'Unknown Date', style: _textStyle),
+                      Text(data['venue'] ?? 'Unknown Venue', style: textStyle),
+                      Text(data['date'] ?? 'Unknown Date', style: textStyle),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             data['start_time'] ?? 'Unknown Time',
-                            style: _textStyle,
+                            style: textStyle,
                           ),
                           GestureDetector(
                             onTap: () async {
@@ -213,7 +212,7 @@ class _RSVPListState extends State<RSVPList> {
                   padding: EdgeInsets.all(10),
                   child:
                       _eventList.isEmpty == true
-                          ? const Center(child: const Text("No Event RSVP"))
+                          ? const Center(child: Text("No Event RSVP"))
                           : IntrinsicHeight(
                             child: Column(
                               children: [

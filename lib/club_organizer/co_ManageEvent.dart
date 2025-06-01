@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ClubOrgManageEvent extends StatefulWidget {
-  ClubOrgManageEvent({super.key});
+  const ClubOrgManageEvent({super.key});
 
   @override
   State<StatefulWidget> createState() => _COManageEvent();
@@ -38,7 +38,6 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
 
       if (userData.exists && userData.data() != null) {
         DocumentReference clubRef = userData.data()?['club_org'];
-        final club = await clubRef.get();
 
         for (var docs in eventSnapshot.docs) {
           if (docs.data()['club'] == clubRef) {
@@ -56,7 +55,6 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
             for (var item in dropdownConst.dropdownCatagory) {
               final code = item['Code'];
               final catagory = item['Catagory'];
-              final icon = item['Icons'];
               if (data['catagory_key'] == code) {
                 data['catagory'] = catagory;
               }
@@ -93,13 +91,16 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
           _isLoading = false;
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red.shade200, content: Text('$e')),
+      );}
   }
 
   Widget _buildEventCard(Map<String, dynamic> data, int index) {
-    final _textStyle = TextStyle(
+    final textStyle = TextStyle(
       fontWeight: FontWeight.bold,
-      color: Colors.black,
+      color: index % 2 == 0 ? Colors.black : Colors.white,
     );
 
     return Container(
@@ -140,16 +141,16 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: index % 2 == 0 ? Colors.black : Colors.white,
                         ),
                       ),
-                      Text(data['catagory']),
-                      Text(data['venue']),
-                      Text(data['date']),
+                      Text(data['catagory'], style: textStyle),
+                      Text(data['venue'], style: textStyle),
+                      Text(data['date'], style: textStyle),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(data['start_time']),
+                          Text(data['start_time'], style: textStyle),
                           GestureDetector(
                             onTap: () async {
                               Navigator.push(
@@ -170,7 +171,7 @@ class _COManageEvent extends State<ClubOrgManageEvent> {
                               style: TextStyle(
                                 color:
                                     index % 2 == 0
-                                        ? Color.fromARGB(255, 134, 53, 214)
+                                        ? Color.fromARGB(255, 98, 39, 158)
                                         : Colors.white,
                               ),
                             ),

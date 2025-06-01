@@ -1,5 +1,4 @@
 import 'package:applanner/admin/admin_backend.dart';
-import 'package:applanner/main/navigation_bar.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +101,9 @@ class _AdminEventDetailsState extends State<AdminEventDetails> {
           _isLoading = false;
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      // print("Debug $e");
+    }
   }
 
   @override
@@ -395,12 +396,12 @@ class _AdminEventDetailsState extends State<AdminEventDetails> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () async {
-                                    late bool _isComplete;
+                                    late bool isComplete;
 
-                                    _isComplete = await _adminService
+                                    isComplete = await _adminService
                                         .manageEvenet(_uid, true);
 
-                                    if (_isComplete) {
+                                    if (isComplete) {
                                       ScaffoldMessenger.of(
                                         context,
                                       ).showSnackBar(
@@ -459,12 +460,12 @@ class _AdminEventDetailsState extends State<AdminEventDetails> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () async {
-                                    late bool _isComplete;
+                                    late bool isComplete;
 
-                                    _isComplete = await _adminService
+                                    isComplete = await _adminService
                                         .manageEvenet(_uid, false);
 
-                                    if (_isComplete) {
+                                    if (isComplete) {
                                       ScaffoldMessenger.of(
                                         context,
                                       ).showSnackBar(

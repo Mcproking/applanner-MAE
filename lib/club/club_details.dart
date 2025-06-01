@@ -222,7 +222,7 @@ class _ClubDetailsState extends State<ClubDetails> {
 
                     const SizedBox(height: 20),
 
-                    // Memeber List TODO: handle if no member in the club
+                    // Sample Member list 
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(),

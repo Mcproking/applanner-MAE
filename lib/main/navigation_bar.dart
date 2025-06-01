@@ -1,20 +1,18 @@
 import 'package:applanner/admin/admin_dashboard.dart';
+import 'package:applanner/club_organizer/co_dashboard.dart';
 import 'package:applanner/main/club.dart';
 import 'package:applanner/main/event.dart';
-import 'package:applanner/main/home.dart';
-import 'package:applanner/main/more.dart';
+import 'package:applanner/member/member_dashboard.dart';
 import 'package:applanner/member/member_scanQR.dart';
 import 'package:applanner/user_management/user_management_list.dart';
-import 'package:applanner/user_management/user_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class MainMenu extends StatefulWidget {
   final int initialIndex;
 
-  MainMenu({super.key, this.initialIndex = 0});
+  const MainMenu({super.key, this.initialIndex = 0});
 
   @override
   State<StatefulWidget> createState() => _MainMenuState();
@@ -22,7 +20,6 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   late int _selectedIndex;
-  String _name = 'Temp';
   int _role = 0;
 
   @override
@@ -32,14 +29,12 @@ class _MainMenuState extends State<MainMenu> {
     _fetchUserData(); // init the passed index
   }
 
-  // static List<Widget> _screens = <Widget>[Home(), UserManegementList()];
-
   final List<Map<String, dynamic>> _screens = [
     {
       'icon': Icons.home,
       'icon_select': Icons.home_outlined,
       'label': 'Home',
-      'redirect': Home(),
+      'redirect': MemberMenu(),
     },
     {
       'icon': Icons.accessible_forward,
@@ -59,11 +54,26 @@ class _MainMenuState extends State<MainMenu> {
       'label': 'Clubs',
       'redirect': Club(),
     },
+  ];
+
+  final List<Map<String, dynamic>> _clubOrgScreens = [
     {
-      'icon': Icons.menu,
-      'icon_select': Icons.menu_outlined,
-      'label': 'More',
-      'redirect': MoreMenu(),
+      'icon': Icons.home,
+      'icon_select': Icons.home_outlined,
+      'label': 'Home',
+      'redirect': ClubOrgMenu(),
+    },
+    {
+      'icon': Icons.accessible_forward,
+      'icon_select': Icons.accessible,
+      'label': 'Events',
+      'redirect': Event(),
+    },
+    {
+      'icon': Icons.group,
+      'icon_select': Icons.group_outlined,
+      'label': 'Clubs',
+      'redirect': Club(),
     },
   ];
 
@@ -111,6 +121,8 @@ class _MainMenuState extends State<MainMenu> {
               child:
                   _role == 2
                       ? _adminScreen[_selectedIndex]['redirect']
+                      : _role == 1
+                      ? _clubOrgScreens[_selectedIndex]['redirect']
                       : _screens[_selectedIndex]['redirect'],
             ),
             Container(child: _bottomNavigationBar()),
@@ -132,7 +144,6 @@ class _MainMenuState extends State<MainMenu> {
 
         if (userData.exists && userData.data() != null) {
           setState(() {
-            _name = userData.data()?['name'] ?? 'Temp';
             _role = userData.data()?['role'] ?? '0';
             _profileUrl =
                 userData.data()?.containsKey('profile_pic') == true
@@ -141,7 +152,6 @@ class _MainMenuState extends State<MainMenu> {
           });
         } else {
           setState(() {
-            _name = 'Temp';
             _role = 0;
             _profileUrl = null;
           });
@@ -149,7 +159,6 @@ class _MainMenuState extends State<MainMenu> {
       }
     } catch (e) {
       setState(() {
-        _name = 'Temp';
         _role = 0;
         _profileUrl = null;
       });
@@ -164,7 +173,7 @@ class _MainMenuState extends State<MainMenu> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
-            'images/applannerlighttheme.png',
+            'images/applannerlogo.png',
             width: MediaQuery.of(context).size.width * 0.3,
             height: MediaQuery.of(context).size.height * 0.05,
           ),
@@ -198,6 +207,16 @@ class _MainMenuState extends State<MainMenu> {
             _role == 2
                 ? List.generate(_adminScreen.length, (index) {
                   final item = _adminScreen[index];
+                  return _buildNavItem(
+                    index,
+                    item['icon'],
+                    item['icon_select'],
+                    item['label'],
+                  );
+                })
+                : _role == 1
+                ? List.generate(_clubOrgScreens.length, (index) {
+                  final item = _clubOrgScreens[index];
                   return _buildNavItem(
                     index,
                     item['icon'],

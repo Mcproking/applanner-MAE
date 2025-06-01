@@ -30,7 +30,7 @@ class _MoreEventState extends State<MoreEvent> {
   bool _isLoading = true;
   bool _isCompleted = false;
 
-  MemberService _memberService = MemberService();
+  final MemberService _memberService = MemberService();
 
   @override
   void initState() {
@@ -67,7 +67,6 @@ class _MoreEventState extends State<MoreEvent> {
         }
 
         if (eventData.data()!.containsKey('isCompleted') == true) {
-
           final rsvpRaw = eventData['rsvp'] as List<dynamic>;
           final List<DocumentReference> rsvpRefs =
               rsvpRaw.cast<DocumentReference>();
@@ -122,7 +121,7 @@ class _MoreEventState extends State<MoreEvent> {
           _eventRSVP = rsvpRaw != null ? rsvpRaw.length : 0;
 
           _isCompleted =
-              eventData['isCompleted'] == true
+              eventData.data()?.containsKey('isCompleted') == true
                   ? eventData['isCompleted']
                   : false;
 
@@ -137,10 +136,11 @@ class _MoreEventState extends State<MoreEvent> {
           _eventEndTime = "Unknown data";
           _eventCatagory = "Unknown Catagory";
           _eventVenue = "Unknown Venue";
+          _isLoading = false;
         });
       }
     } catch (e) {
-      print("debug: $e");
+      // print("debug: $e");
     }
   }
 
@@ -180,317 +180,350 @@ class _MoreEventState extends State<MoreEvent> {
         backgroundColor: Color.fromARGB(255, 51, 51, 51),
         shadowColor: Color.fromARGB(255, 119, 119, 119),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Show banner image in more bigger form
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 250,
-              child: Align(
-                child: Image(
-                  image:
-                      _eventImage != null
-                          ? NetworkImage(_eventImage!)
-                          : AssetImage('images/event_default.jpg'),
-                  fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width,
-                ),
-              ),
-            ),
+      body:
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Show banner image in more bigger form
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 250,
+                      child: Align(
+                        child: Image(
+                          image:
+                              _eventImage != null
+                                  ? NetworkImage(_eventImage!)
+                                  : AssetImage('images/event_default.png'),
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                      ),
+                    ),
 
-            // Details
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //show name
-                  Text(
-                    _eventName,
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
+                    // Details
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //show name
+                          Text(
+                            _eventName,
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
 
-                  // show description
-                  Text(_eventDesc, style: TextStyle(fontSize: 20)),
+                          // show description
+                          Text(_eventDesc, style: TextStyle(fontSize: 20)),
 
-                  // divider
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(child: Divider()),
-                      const SizedBox(width: 8),
-                      const Text("Event Details"),
-                      const SizedBox(width: 8),
-                      Expanded(child: Divider()),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-
-                  // show remaining detail
-                  //// Date
-                  Text(
-                    "Date: $_eventDate",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  //// Start Time
-                  Text(
-                    "Start Time: $_eventStartTime",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  //// End Time
-                  Text(
-                    "End Time: $_eventEndTime",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  //// Venue
-                  Text(
-                    "Venue: $_eventVenue",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  /// Catagory
-                  Text(
-                    "Catagory: $_eventCatagory",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  /// show num of rsvp's
-                  Text(
-                    "Number of RSVP: $_eventRSVP",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // show rvsp button or show attend list
-                  _isCompleted
-                      ? Container(
-                        decoration: BoxDecoration(),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Column(
+                          // divider
+                          const SizedBox(height: 8),
+                          Row(
                             children: [
-                              // Header
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 85, 85, 85),
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.white,
-                                      width: 4,
-                                    ),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Attended Members",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    ...List.generate(_attendList.length, (
-                                      index,
-                                    ) {
-                                      return _buildCard(
-                                        _attendList[index],
-                                        index,
-                                        _attendList.length,
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              ),
+                              Expanded(child: Divider()),
+                              const SizedBox(width: 8),
+                              const Text("Event Details"),
+                              const SizedBox(width: 8),
+                              Expanded(child: Divider()),
                             ],
                           ),
-                        ),
-                      )
-                      : GestureDetector(
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.greenAccent.shade100,
-                              duration: Duration(milliseconds: 1500),
-                              content: Row(
-                                children: [
-                                  // text prompt
-                                  Expanded(
-                                    child: const Text(
-                                      "RVSP this Event?",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                          const SizedBox(height: 8),
+
+                          // show remaining detail
+                          /// Club name
+                          Text(
+                            "Club: $_clubName",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+
+                          //// Date
+                          Text(
+                            "Date: $_eventDate",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+
+                          //// Start Time
+                          Text(
+                            "Start Time: $_eventStartTime",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+
+                          //// End Time
+                          Text(
+                            "End Time: $_eventEndTime",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+
+                          //// Venue
+                          Text(
+                            "Venue: $_eventVenue",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+
+                          /// Catagory
+                          Text(
+                            "Catagory: $_eventCatagory",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+
+                          /// show num of rsvp's
+                          Text(
+                            "Number of RSVP: $_eventRSVP",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 16),
+
+                          // show rvsp button or show attend list
+                          _isCompleted
+                              ? Container(
+                                decoration: BoxDecoration(),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Column(
+                                    children: [
+                                      // Header
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: Color.fromARGB(
+                                            255,
+                                            85,
+                                            85,
+                                            85,
+                                          ),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.white,
+                                              width: 4,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Attended Members",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            ...List.generate(
+                                              _attendList.length,
+                                              (index) {
+                                                return _buildCard(
+                                                  _attendList[index],
+                                                  index,
+                                                  _attendList.length,
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-
-                                  GestureDetector(
-                                    onTap: () async {
-                                      bool? _isJoined;
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).hideCurrentSnackBar();
-
-                                      _isJoined = await _memberService
-                                          .joinEvent(_uid);
-
-                                      if (_isJoined == null) {
-                                        Navigator.pop(context, true);
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor:
-                                                Colors
-                                                    .lightGreenAccent
-                                                    .shade400,
-                                            duration: Duration(
-                                              milliseconds: 1500,
-                                            ),
-                                            content: Text(
-                                              "You have RSVP'ed this Event before",
+                                ),
+                              )
+                              : GestureDetector(
+                                onTap: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor:
+                                          Colors.greenAccent.shade100,
+                                      duration: Duration(milliseconds: 1500),
+                                      content: Row(
+                                        children: [
+                                          // text prompt
+                                          Expanded(
+                                            child: const Text(
+                                              "RVSP this Event?",
                                               style: TextStyle(
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold,
+                                                color: Colors.black,
                                               ),
                                             ),
                                           ),
-                                        );
-                                      }
 
-                                      if (_isJoined != null && _isJoined) {
-                                        Navigator.pop(context, true);
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor:
-                                                Colors.greenAccent.shade200,
-                                            duration: Duration(
-                                              milliseconds: 1500,
-                                            ),
-                                            content: Text(
-                                              "RSVP'ed this Event",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                          GestureDetector(
+                                            onTap: () async {
+                                              bool? isJoined;
+                                              ScaffoldMessenger.of(
+                                                context,
+                                              ).hideCurrentSnackBar();
+
+                                              isJoined = await _memberService
+                                                  .joinEvent(_uid);
+
+                                              if (isJoined == null) {
+                                                Navigator.pop(context, true);
+                                                ScaffoldMessenger.of(
+                                                  context,
+                                                ).showSnackBar(
+                                                  SnackBar(
+                                                    backgroundColor:
+                                                        Colors
+                                                            .lightGreenAccent
+                                                            .shade400,
+                                                    duration: Duration(
+                                                      milliseconds: 1500,
+                                                    ),
+                                                    content: Text(
+                                                      "You have RSVP'ed this Event before",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+
+                                              if (isJoined != null &&
+                                                  isJoined) {
+                                                Navigator.pop(context, true);
+                                                ScaffoldMessenger.of(
+                                                  context,
+                                                ).showSnackBar(
+                                                  SnackBar(
+                                                    backgroundColor:
+                                                        Colors
+                                                            .greenAccent
+                                                            .shade200,
+                                                    duration: Duration(
+                                                      milliseconds: 1500,
+                                                    ),
+                                                    content: Text(
+                                                      "RSVP'ed this Event",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+
+                                              if (isJoined != null &&
+                                                  !isJoined) {
+                                                ScaffoldMessenger.of(
+                                                  context,
+                                                ).showSnackBar(
+                                                  SnackBar(
+                                                    backgroundColor:
+                                                        Colors
+                                                            .redAccent
+                                                            .shade200,
+                                                    duration: Duration(
+                                                      milliseconds: 1500,
+                                                    ),
+                                                    content: Text(
+                                                      "Internal Error",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 5,
+                                                horizontal: 10,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    Colors.greenAccent.shade400,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black,
+                                                    offset: Offset(0, 2),
+                                                    blurRadius: 5,
+                                                    blurStyle: BlurStyle.inner,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Text(
+                                                "RSVP",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      }
-
-                                      if (_isJoined != null && !_isJoined) {
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor:
-                                                Colors.redAccent.shade200,
-                                            duration: Duration(
-                                              milliseconds: 1500,
-                                            ),
-                                            content: Text(
-                                              "Internal Error",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.greenAccent.shade400,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black,
-                                            offset: Offset(0, 2),
-                                            blurRadius: 5,
-                                            blurStyle: BlurStyle.inner,
                                           ),
                                         ],
                                       ),
-                                      child: Text(
-                                        "RSVP",
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.greenAccent.shade200,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        offset: Offset(0, 2),
+                                        blurRadius: 5,
+                                        blurStyle: BlurStyle.inner,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.book, color: Colors.black),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        "Book Now",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20,
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.greenAccent.shade200,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(0, 2),
-                                blurRadius: 5,
-                                blurStyle: BlurStyle.inner,
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.book, color: Colors.black),
-                              const SizedBox(width: 8),
-                              Text(
-                                "Book Now",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,8 +7,8 @@ class MemberService {
 
   Future<bool?> joinEvent(String uid) async {
     try {
-      bool _isJoinedEvent = false, _isJoinedUser = false;
-      final eventRef = await _firestore.collection('events').doc(uid);
+      bool isJoinedEvent = false, isJoinedUser = false;
+      final eventRef = _firestore.collection('events').doc(uid);
       String useruid = _auth.currentUser!.uid;
       final userRef = _firestore.collection('users').doc(useruid);
       final eventData = await eventRef.get();
@@ -41,30 +39,28 @@ class MemberService {
         // if the event do not have rsvp
         if (eventJoinedArray == null) {
           await eventRef.update(rsvpEvent);
-          _isJoinedEvent = true;
+          isJoinedEvent = true;
         }
         // if the event have rsvp, but the user is not rsvp
-        else if (eventJoinedArray != null &&
-            !eventJoinedArray.contains(userRef)) {
+        else if (!eventJoinedArray.contains(userRef)) {
           await eventRef.update({
             'rsvp': FieldValue.arrayUnion([userRef]),
           });
-          _isJoinedEvent = true;
+          isJoinedEvent = true;
         }
 
         // if the user do not have rsvp
         if (userJoinedArray == null) {
           await userRef.update(rsvpUser);
-          _isJoinedUser = true;
-        } else if (userJoinedArray != null &&
-            !userJoinedArray.contains(eventRef)) {
+          isJoinedUser = true;
+        } else if (!userJoinedArray.contains(eventRef)) {
           await userRef.update({
             'rsvp': FieldValue.arrayUnion([eventRef]),
           });
-          _isJoinedUser = true;
+          isJoinedUser = true;
         }
 
-        return _isJoinedEvent && _isJoinedEvent == true ? true : null;
+        return isJoinedEvent && isJoinedUser == true ? true : null;
       } else {
         return false;
       }

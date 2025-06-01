@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class AdminMenu extends StatefulWidget {
   final int initIndex;
 
-  AdminMenu({super.key, this.initIndex = 0});
+  const AdminMenu({super.key, this.initIndex = 0});
 
   @override
   State<StatefulWidget> createState() => _AdminMenuState();
@@ -120,7 +120,9 @@ class _AdminMenuState extends State<AdminMenu> {
           _isLoading = false;
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      // print("Debug $e");
+    }
   }
 
   Widget _buildList(
@@ -168,16 +170,16 @@ class _AdminMenuState extends State<AdminMenu> {
               Text("Time: $time", style: TextStyle(color: Colors.black)),
               GestureDetector(
                 onTap: () async {
-                  bool _refreshWidget = false;
+                  bool refreshWidget = false;
 
-                  _refreshWidget = await Navigator.push(
+                  refreshWidget = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => AdminEventDetails(uid: id),
                     ),
                   );
 
-                  if (_refreshWidget == true) {
+                  if (refreshWidget == true) {
                     _fetchUnapprovedEventData();
                   }
                 },

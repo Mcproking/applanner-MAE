@@ -2,7 +2,6 @@ import 'package:applanner/member/member_backend.dart';
 import 'package:applanner/others/dropdownConst.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class MemberScannedDetails extends StatefulWidget {
@@ -20,11 +19,10 @@ class _MemberScannedDetails extends State<MemberScannedDetails> {
   String _clubName = 'Unknown Club';
   String _eventVenue = 'Unknown Venue';
 
-  List<Map<String, dynamic>> _attendList = [];
   List<DocumentReference>? _rsvpList;
   List<DocumentReference>? _attendRefList;
 
-  MemberService _memberService = MemberService();
+  final MemberService _memberService = MemberService();
 
   bool _isAttendee = false;
   bool _isAttended = false;
@@ -64,7 +62,7 @@ class _MemberScannedDetails extends State<MemberScannedDetails> {
         });
       }
     } catch (e) {
-      print("Debug: $e");
+      // print("Debug: $e");
     }
   }
 
@@ -125,7 +123,6 @@ class _MemberScannedDetails extends State<MemberScannedDetails> {
 
         setState(() {
           _rsvpList = rsvpRefs;
-          _attendList = rsvpUsers;
         });
       }
 
@@ -182,7 +179,7 @@ class _MemberScannedDetails extends State<MemberScannedDetails> {
                             ),
                           ),
                           Text(
-                            "By $_eventName",
+                            "By $_clubName",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

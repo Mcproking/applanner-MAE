@@ -31,7 +31,7 @@ class _ClubOrgQRCodeState extends State<ClubOrgQRCode> {
       body: Container(
         padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

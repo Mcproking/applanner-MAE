@@ -190,6 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter University Name';
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(height: 20),

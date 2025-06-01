@@ -1,4 +1,3 @@
-import 'package:applanner/admin/admin_dashboard.dart';
 import 'package:applanner/auth/authentication.dart';
 import 'package:applanner/auth/signup.dart';
 import 'package:applanner/main/navigation_bar.dart';
@@ -45,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Image.asset(
-                      'images/applannerlighttheme.png',
+                      'images/applannerlogo.png',
                       width: MediaQuery.of(context).size.width * 0.5,
                       height: MediaQuery.of(context).size.height * 0.1,
                     ),
@@ -127,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                             );
 
                             if (user != null) {
-                              print('Debug: User return with data');
+                              // print('Debug: User return with data');
                               String uid = user.uid;
                               DocumentSnapshot<Map<String, dynamic>> userDoc =
                                   await FirebaseFirestore.instance
@@ -167,14 +166,14 @@ class _LoginPageState extends State<LoginPage> {
                                     // redirect to admin page
                                     break;
                                   case null:
-                                    print("Debug: Role data doesn't exist");
+                                    // print("Debug: Role data doesn't exist");
                                     // if the user data do not have role-related numbering
                                     throw FirebaseAuthException(
                                       code: 'internal-error',
                                       message: 'user data error',
                                     );
                                   default:
-                                    print("Debug: Other issue here");
+                                    // print("Debug: Other issue here");
                                     // if the user data do not have role-related numbering
                                     throw FirebaseAuthException(
                                       code: 'internal-error',
@@ -186,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                           } catch (e) {
                             String errMessage;
                             if (e is FirebaseAuthException) {
-                              print("Debug: " + e.code);
+                              // print("Debug: ${e.code}");
                               switch (e.code) {
                                 case 'invalid-credential':
                                   errMessage =

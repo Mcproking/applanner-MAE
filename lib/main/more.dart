@@ -3,7 +3,7 @@ import 'package:applanner/member/member_rsvpList.dart';
 import 'package:flutter/material.dart';
 
 class MoreMenu extends StatefulWidget {
-  MoreMenu({super.key});
+  const MoreMenu({super.key});
 
   @override
   State<StatefulWidget> createState() => _MoreMenuState();

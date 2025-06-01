@@ -1,6 +1,4 @@
-import 'package:applanner/admin/admin_dashboard.dart';
 import 'package:applanner/auth/login.dart';
-import 'package:applanner/auth/signup.dart';
 import 'package:applanner/main/navigation_bar.dart';
 import 'package:applanner/main/splashScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -43,11 +41,9 @@ class AuthGate extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          // Notification related???
-          // handle notifcation press related???
           return snapshot.data!;
         } else {
-          return const Splashscreen();
+          return const LoginPage();
         }
       },
     );
@@ -72,14 +68,12 @@ class AuthGate extends StatelessWidget {
           case 2:
             return MainMenu();
           case null:
-            print("Debug: Role data doesn't exist");
             // if the user data do not have role-related numbering
             throw FirebaseAuthException(
               code: 'internal-error',
               message: 'user data error',
             );
           default:
-            print("Debug: Other issue here");
             // if the user data do not have role-related numbering
             throw FirebaseAuthException(
               code: 'internal-error',
