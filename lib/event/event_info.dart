@@ -67,7 +67,6 @@ class _MoreEventState extends State<MoreEvent> {
         }
 
         if (eventData.data()!.containsKey('isCompleted') == true) {
-          List<DocumentReference>? attendListRaw;
 
           final rsvpRaw = eventData['rsvp'] as List<dynamic>;
           final List<DocumentReference> rsvpRefs =

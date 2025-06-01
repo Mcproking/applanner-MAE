@@ -72,4 +72,27 @@ class MemberService {
       rethrow;
     }
   }
+
+  Future<bool?> attendEvent(String uid) async {
+    try {
+      String userUid = _auth.currentUser!.uid;
+      final userRef = _firestore.collection('users').doc(userUid);
+      final eventRef = _firestore.collection('events').doc(uid);
+      final eventData = await eventRef.get();
+
+      if (eventData.data()?.containsKey('attended') == true) {
+        await eventRef.update({
+          'attended': FieldValue.arrayUnion([userRef]),
+        });
+        return true;
+      } else {
+        await eventRef.update({
+          'attended': [userRef],
+        });
+        return true;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:applanner/club_organizer/co_attendQR.dart';
 import 'package:applanner/club_organizer/co_backend.dart';
 import 'package:applanner/club_organizer/co_backend.dart';
 import 'package:applanner/others/dropdownConst.dart';
@@ -25,6 +26,7 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
   String _venueName = '';
   String _clubName = '';
   bool? _eventStatus;
+  bool? _eventComplete;
 
   bool _isApproved = false;
   bool _isLoading = true;
@@ -98,6 +100,12 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
           }
 
           _isApproved = eventData.data()?.containsKey('isApproved') ?? false;
+
+          if (eventData.data()?.containsKey('isCompleted') ?? false) {
+            _eventComplete = eventData['isCompleted'];
+          } else {
+            _eventComplete = null;
+          }
 
           _isLoading = false;
         });
@@ -508,7 +516,53 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
                               ),
                             ],
                           )
-                          : const SizedBox.shrink(),
+                          : _eventComplete == null
+                          ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => ClubOrgQRCode(
+                                              uid: _uid,
+                                              name: _eventName,
+                                            ),
+                                      ),
+                                    ).then((value) {
+                                      if (value == true) {
+                                        _getEventDetails();
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.greenAccent.shade200,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 15,
+                                      horizontal: 30,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.delete, color: Colors.black),
+                                        const SizedBox(width: 12),
+                                        Text(
+                                          "Attendance",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                          : SizedBox.shrink(),
                     ],
                   ),
         ),

@@ -3,6 +3,7 @@ import 'package:applanner/main/club.dart';
 import 'package:applanner/main/event.dart';
 import 'package:applanner/main/home.dart';
 import 'package:applanner/main/more.dart';
+import 'package:applanner/member/member_scanQR.dart';
 import 'package:applanner/user_management/user_management_list.dart';
 import 'package:applanner/user_management/user_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,6 +46,12 @@ class _MainMenuState extends State<MainMenu> {
       'icon_select': Icons.accessible,
       'label': 'Events',
       'redirect': Event(),
+    },
+    {
+      'icon': Icons.qr_code_scanner,
+      'icon_select': Icons.qr_code_outlined,
+      'label': 'Scan',
+      'redirect': MemberScanQR(),
     },
     {
       'icon': Icons.group,

@@ -65,4 +65,19 @@ class OrganizerService {
       rethrow;
     }
   }
+
+  Future<bool?> completeEvent(String uid) async {
+    final eventRef = _firestore.collection('events').doc(uid);
+    final eventData = await eventRef.get();
+
+    if (eventData.exists && eventData.data() != null) {
+      try {
+        eventRef.update({'isCompleted': true});
+        return true;
+      } catch (e) {
+        rethrow;
+      }
+    }
+    return null;
+  }
 }
