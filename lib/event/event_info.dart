@@ -67,21 +67,23 @@ class _MoreEventState extends State<MoreEvent> {
         }
 
         if (eventData.data()!.containsKey('isCompleted') == true) {
-          final rsvpRaw = eventData['rsvp'] as List<dynamic>;
-          final List<DocumentReference> rsvpRefs =
-              rsvpRaw.cast<DocumentReference>();
+          final attendRaw = eventData['attended'] as List<dynamic>;
+          final List<DocumentReference> attendRefs =
+              attendRaw.cast<DocumentReference>();
 
-          List<Map<String, dynamic>> rsvpUsers = [];
+          List<Map<String, dynamic>> attendUsers = [];
 
-          for (DocumentReference ref in rsvpRefs) {
+          for (DocumentReference ref in attendRefs) {
             final snapshot = await ref.get();
             if (snapshot.exists && snapshot.data() != null) {
-              rsvpUsers.add(snapshot.data() as Map<String, dynamic>);
+
+
+              attendUsers.add(snapshot.data() as Map<String, dynamic>);
             }
           }
 
           setState(() {
-            _attendList = rsvpUsers;
+            _attendList = attendUsers;
           });
         }
 

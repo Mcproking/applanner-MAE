@@ -12,7 +12,13 @@ class _SplashscreenState extends State<Splashscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(child: Image.asset('image/applannerlogo.png')),
+      body: Center(
+        child: Image.asset(
+          'images/applannerlogo.png',
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height * 0.3,
+        ),
+      ),
     );
   }
 }
