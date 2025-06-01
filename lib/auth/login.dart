@@ -60,12 +60,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
 
-                    // Text field for Student email
+                    // Text field for Email
                     TextFormField(
                       key: ValueKey('emailField'),
                       controller: _studentEmailController,
                       decoration: InputDecoration(
-                        labelText: "Student Email",
+                        labelText: "Email",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
