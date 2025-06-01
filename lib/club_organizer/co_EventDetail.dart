@@ -550,7 +550,7 @@ class _COEventDetail extends State<ClubOrgEventDetail> {
                                     ),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.delete, color: Colors.black),
+                                        Icon(Icons.check, color: Colors.black),
                                         const SizedBox(width: 12),
                                         Text(
                                           "Attendance",

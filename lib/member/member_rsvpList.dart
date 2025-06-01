@@ -156,31 +156,6 @@ class _RSVPListState extends State<RSVPList> {
                             data['start_time'] ?? 'Unknown Time',
                             style: textStyle,
                           ),
-                          GestureDetector(
-                            onTap: () async {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder:
-                              //         (context) =>
-                              //             ClubOrgEventDetail(uid: data['id']),
-                              //   ),
-                              // ).then((result) {
-                              //   if (result) {
-                              //     _getAllEventByClub();
-                              //   }
-                              // });
-                            },
-                            child: Text(
-                              "More Info >>",
-                              style: TextStyle(
-                                color:
-                                    index % 2 == 0
-                                        ? Color.fromARGB(255, 98, 39, 158)
-                                        : Colors.white,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       const SizedBox(height: 3),
