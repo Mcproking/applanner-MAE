@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "594860189403",
+    "firebase_url": "https://applaner-mae-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "applaner-mae",
+    "storage_bucket": "applaner-mae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594860189403:android:00b6ede3ad1b988b4e4efe",
+        "android_client_info": {
+          "package_name": "com.example.applanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4N8-huZKLrmkifPaXvzTzugEvZVAr6cM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
